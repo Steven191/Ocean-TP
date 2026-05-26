@@ -1,0 +1,25 @@
+{
+  "config": {
+    "layers": 4,
+    "min_thickness": 300.0,
+    "min_samples_per_layer": 1000,
+    "bin_width": 1.0,
+    "val_fraction": 0.2,
+    "ensemble_method": "weighted",
+    "use_depth_weighting": true,
+    "shallow_layer_boost": 1.5
+  },
+  "seasonal_models": {
+    "Season1": null,
+    "Season2": null,
+    "Season3": null,
+    "Season4": null
+  },
+  "global_stats": {
+    "temp_mean": 2.908557727598839,
+    "temp_std": 0.787938694655095,
+    "pressure_mean": -1146.9150541680694,
+    "pressure_std": 545.395094502973,
+    "total_samples": 100982
+  }
+}
