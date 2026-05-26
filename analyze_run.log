@@ -1,0 +1,25 @@
+发现 17 个 CSV 文件，开始聚合…
+[1/17] 处理：ooi-gp02hypm-wfp02-04-ctdpfl000_057f_bed6_0abd.csv
+[2/17] 处理：ooi-gp02hypm-wfp02-04-ctdpfl000_0cc2_66c1_7576.csv
+[3/17] 处理：ooi-gp02hypm-wfp02-04-ctdpfl000_28cc_6a6e_aa72.csv
+[4/17] 处理：ooi-gp02hypm-wfp02-04-ctdpfl000_2a5d_bd72_db92.csv
+[5/17] 处理：ooi-gp02hypm-wfp02-04-ctdpfl000_4c39_8bbe_06dd.csv
+[6/17] 处理：ooi-gp02hypm-wfp02-04-ctdpfl000_871b_4bdf_2a76.csv
+[7/17] 处理：ooi-gp02hypm-wfp02-04-ctdpfl000_9f80_c927_7483.csv
+[8/17] 处理：ooi-gp02hypm-wfp02-04-ctdpfl000_a73a_2f6f_e02d.csv
+[9/17] 处理：ooi-gp02hypm-wfp02-04-ctdpfl000_cf11_e5aa_a82c.csv
+[10/17] 处理：ooi-gp02hypm-wfp03-04-ctdpfl000_003a_5746_7274.csv
+[11/17] 处理：ooi-gp02hypm-wfp03-04-ctdpfl000_1ea5_0c99_a3d1.csv
+[12/17] 处理：ooi-gp02hypm-wfp03-04-ctdpfl000_3d8a_e150_c43a.csv
+[13/17] 处理：ooi-gp02hypm-wfp03-04-ctdpfl000_3ef2_8990_b542.csv
+[14/17] 处理：ooi-gp02hypm-wfp03-04-ctdpfl000_4ed1_b2a7_615f.csv
+[15/17] 处理：ooi-gp02hypm-wfp03-04-ctdpfl000_a0f1_30f8_a68b.csv
+[16/17] 处理：ooi-gp02hypm-wfp03-04-ctdpfl000_b906_2977_bace.csv
+[17/17] 处理：ooi-gp02hypm-wfp03-04-ctdpfl000_c0c1_5519_8452.csv
+生成图表…
+抽样并生成 T–P 散点、直方图/KDE、箱线图…
+生成 T–P 回归与二维密度图…
+生成温度梯度剖面图…
+聚合深度统计并生成误差棒图…
+输出报告…
+完成。图表请查看 figures/ 目录，报告 README_ooi_report.md。

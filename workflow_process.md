@@ -284,7 +284,38 @@ python3 compute_depth_layers.py \
 
 ---
 
-## 9. 其他尝试 & 观察
+## 9. PINN 框架强化总结
+
+- 新脚本：`pinn_tp_fit.py` 重构为参数化 PINN 训练器，核心增强：
+  - **多频 Fourier 编码**：`--multi-freq 1e-4,3e-4,1e-3,3e-3`（默认），支持输入归一化 `--normalize-input`。
+  - **激活可选**：`--activation`（`sine`/`gelu`/`tanh`/`hybrid`），默认 SIREN；可调 `--sine-w0`。
+  - **Hybrid Analytical Base**：`--hybrid-base eight_term` 先预测解析 8 项，再用 MLP 学残差，亦可 `--hybrid-base none`。
+  - **物理损失组合**：一阶、二阶导数约束、伪 PDE 残差（`physics_rhs`）、平滑惩罚。权重参数：`--lambda-phys`、`--grad1-weight`、`--grad2-penalty`、`--pseudo-weight`、`--smooth-weight`。
+  - **Adaptive λ**：`--lambda-schedule adaptive` + `--adapt-every` 动态平衡 data/physics loss。
+  - **多头输出**：`--num-heads` 根据压力分段共享 backbone；与分层结构兼容。
+  - **训练调度**：`--scheduler cosine`、`--epochs` 默认 3000，支持 `--save-curve` 输出 `pinn_curve_compare.csv`。
+
+- 推荐命令模板：
+
+```
+python3 pinn_tp_fit.py \
+  --data-dir . \
+  --samples 60000 \
+  --epochs 3000 \
+  --normalize-input --use-depth \
+  --multi-freq "1e-4,3e-4,1e-3,3e-3" \
+  --activation sine --sine-w0 30 \
+  --hybrid-base eight_term \
+  --lambda-phys 0.05 --grad1-weight 0.02 --grad2-penalty 0.2 \
+  --lambda-schedule adaptive --adapt-every 200 \
+  --scheduler cosine --save-curve
+```
+
+  训练完成后，在 `README_pinn_tp.json` 中记录 MAE/RMSE/R²与配置，图表更新至 `figures/pinn_losses.png`。
+
+---
+
+## 10. 其他尝试 & 观察
 
 1. **Chebyshev 阶数与聚合策略**
    - 直接在原始样本上拟合高阶多项式会导致拟合不稳定（MAE >0.4°C），因此采用 1 m 聚合 + 8 阶 Chebyshev 或 8 项平滑基函数。
