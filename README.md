@@ -1,5 +1,11 @@
 # Ocean-TP Manuscript Companion Repository
 
+<p align="center">
+  <img src="docs/assets/ocean_tp_graphical_abstract.png" alt="Ocean-TP graphical abstract showing the observation-to-model workflow and repository-derived support metrics" width="100%">
+</p>
+
+Ocean-TP reconstructs ocean temperature-pressure profiles by combining OOI observation records, a Mixed-B analytical pressure basis and optimized physics-guided constraints.
+
 This repository contains the code, tabulated support records, figures and historical reference materials associated with the Ocean-TP manuscript.
 
 The current manuscript-facing materials are separated from earlier exploratory outputs so that reviewers can inspect the active support files without sorting through historical experiments.
@@ -48,6 +54,7 @@ python scripts/rebuild_supporting_figures.py
 Or run each plotting script individually:
 
 ```bash
+python scripts/figures/make_readme_graphical_abstract.py
 python scripts/figures/plot_result1_benchmark_frontier.py
 python scripts/figures/plot_result2_monthly_mae_equation_comparison.py
 python scripts/figures/plot_result2_annual_metrics_combo.py
