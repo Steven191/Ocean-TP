@@ -449,7 +449,7 @@ def main():
 
     df_hourly_all = combine_weighted(dfs_hourly, ["time_hour"]).sort_values("time_hour")
     df_depth_all = combine_weighted(dfs_depth, ["depth_bin_m"]).sort_values("depth_bin_m")
-    df_td_all = combine_weighted(dfs_td, ["time_hour", "depth_bin_m"]).sort_values(["time_hour", "depth_bin_m"]) 
+    df_td_all = combine_weighted(dfs_td, ["time_hour", "depth_bin_m"]).sort_values(["time_hour", "depth_bin_m"])
 
     out_dir = data_dir / "figures"
     ensure_figures_dir(data_dir)

@@ -1,0 +1,78 @@
+# 8点选取与拟合报告（含 D-optimal 与 Uniform-8）
+
+本报告系统性说明方法路径、基函数定义与可视化结果，所有图像均使用英文标签；文本说明为中文以便沟通。
+
+- 指标 JSON：`/root/DO/derived/doptimal8_report.json`
+- 三曲线图（英文）：`/root/DO/figures/doptimal8_accuracy.png`
+- 曲线 CSV：`/root/DO/derived/doptimal8_curves.csv`
+- 基函数图（英文）：`/root/DO/figures/basis_functions.png`
+
+## 摘要（Executive Summary）
+- Global: MAE 0.0511, RMSE 0.1119, R² 0.9841
+- D-opt-8: MAE 0.0579, RMSE 0.1154, R² 0.9830
+- Uniform-8: MAE 0.0555, RMSE 0.1271, R² 0.9794
+- Only-8: MAE 6.1455, RMSE 7.3984, R² -68.6557
+
+结论：Uniform-8 在中深层 MAE 更优于 D-opt-8，但浅层误差偏大；整体 RMSE 和 R² 上 D-opt-8 更稳健。严格 Only-8 病态，不具备泛化能力。推荐采用“目标带宽采样 + 岭回归”，并在 8 点方案中优先 D-opt-8 保稳健性，或按关注区间微调 Uniform 分位点以优化局部误差。
+
+## 方法路径（Method Path）
+- 数据与压力定义：用 `P = |z|` 表示压力（dbar≈米），评估区间 `100–4500 dbar`，使用全量 OOI 真实数据。
+- 候选池构建：遍历所有 OOI CSV，步长抽样 + 分箱分层抽样，形成覆盖均衡的候选集（约 60k 行）。
+- 选点策略（8 点）：
+  - Uniform-8：按压力分位数（5%–95%）均匀选取 8 点。
+  - D-optimal-8：Fedorov 交换近似 D-optimal 设计，在标准化特征空间最大化 `logdet(XᵀX)`。
+  - Only-8（对比）：严格仅用 8 个点，不做带宽采样，易病态。
+- 带宽采样与拟合：对每个目标点在 ±25 dbar 内采样（每带宽最多 8000），构造 `X = basis_functions(P)`，采用岭回归（`alpha=5e-3`）解 8 个系数，得到通式 `T_hat(P) = X(P) · c`。
+- 全量评估：在所有真实数据上计算 `MAE, RMSE, R²`，并与 `Global` 基准系数对比。
+
+## 基函数定义（English 标签，图见下）
+- `f1(P) = 1`
+- `f2(P) = P`
+- `f3(P) = log(P)`
+- `f4(P) = sqrt(P)`
+- `f5(P) = exp(-P/500)`
+- `f6(P) = exp(-P/1200)`
+- `f7(P) = 1/(P+50)`
+- `f8(P) = 1/(P+500)`
+- 可视化（英文标签，归一化到 [0,1]）：`/root/DO/figures/basis_functions.png`
+
+## 8点选择与拟合结构
+- Uniform-8 目标点 `uniform_P`（来自 JSON）：`[349, 838, 1326, 1816, 2344, 2832, 3321, 3809]`（dbar）
+- D-opt-8 目标点 `targets_P`（来自 JSON）：`[244, 160, 493, 4025, 1025, 241, 1909, 3323]`（dbar）
+- 预测结构：`T_hat(P) = Σ_{i=1..8} c_i · f_i(P)`（同一组 8 个基函数）
+- 均匀-8 系数 `coeffs_uniform`：`[-4.087740, -0.000192, 0.483331, 0.033312, -0.338162, 6.671172, -0.130336, -0.013346]`
+- D-opt-8 系数 `coeffs_opt`：`[9.376760, -0.005352, -5.261906, 0.893319, -5.326131, 17.922700, 0.617987, -0.023634]`
+- Only-8 系数（对比）：`[-1460500.283527, 23.694585, 224796.942134, -8652.235269, -19120.931681, 25630.640429, 30046060.942699, 180609059.819965]`
+
+## 可视化（英文标签）
+- 三曲线图：`/root/DO/figures/doptimal8_accuracy.png`
+  - 上图：Observed mean 与三条预测（Global / Uniform-8 / D-optimal-8）
+  - 下图：三者绝对误差 |ΔT| 随压力变化
+- 曲线 CSV：`/root/DO/derived/doptimal8_curves.csv`（含 `P, obs_mean, pred_global, pred_uniform, pred_dopt, err_*`）
+- 基函数图：`/root/DO/figures/basis_functions.png`
+
+## 精确结果（全量 OOI 数据评估）
+- Global（基准）：MAE=0.051070，RMSE=0.111888，R²=0.984069，N=27,107,765
+- D-opt-8：MAE=0.057885，RMSE=0.115448，R²=0.983039，N=27,107,765
+- Uniform-8：MAE=0.055528，RMSE=0.127129，R²=0.979433，N=27,107,765
+- Only-8：MAE=6.145486，RMSE=7.398424，R²=-68.655670，N=27,107,765
+
+## 分段 MAE 定量对比（来自 CSV 汇总）
+- 100–500 dbar：Global 0.0122；Uniform-8 0.1134；D-opt-8 0.0322（浅层 Uniform-8 误差偏大）
+- 500–1500 dbar：Global 0.0066；Uniform-8 0.0242；D-opt-8 0.0313
+- 1500–2500 dbar：Global 0.0041；Uniform-8 0.0059；D-opt-8 0.0234（Uniform-8 在中层更优）
+- 2500–3500 dbar：Global 0.0009；Uniform-8 0.0046；D-opt-8 0.0117
+- 3500–4500 dbar：Global 0.0045；Uniform-8 0.0032；D-opt-8 0.0171（Uniform-8 在深层更优）
+
+## 复现步骤
+- 运行：`python3 DO/doptimal8_fit.py`
+- 输出：
+  - 指标 JSON：`/root/DO/derived/doptimal8_report.json`
+  - 三曲线图：`/root/DO/figures/doptimal8_accuracy.png`
+  - 曲线 CSV：`/root/DO/derived/doptimal8_curves.csv`
+  - 基函数图：`/root/DO/figures/basis_functions.png`
+
+## 建议与后续优化
+- 保持“目标带宽采样 + 岭回归”框架，提高稳定性与精度。
+- 关注局部精度时，可在 Uniform 分位点上做适配微调（例如加密浅层点）。
+- 若对 RMSE/R² 更敏感，优先 D-opt-8；如对特定深度 MAE 更敏感，可混合策略（浅/中/深分段 8 点）。

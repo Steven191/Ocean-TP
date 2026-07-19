@@ -1,0 +1,33 @@
+train_count,test_count,category,model,mae,rmse,r2,family,n_configs,group,short_label,rank
+,,Ocean-TP,Ocean-TP optimized Mixed-B framework,0.05107,0.11189,0.98407,Ocean-TP optimized Mixed-B framework,1,ocean_tp,Ocean-TP (optimized Mixed-B),1
+8000.0,2000.0,Analytical control,Mixed-B-only regression fit,0.0553480707442845,0.1075635903271663,0.9846901954210594,Mixed-B-only regression fit,1,analytical,Mixed-B-only fit,2
+8000.0,2000.0,经典回归,"GaussianProcess (Matern ν=1.5, subsample=2k)",0.0554162797781603,0.108143280925337,0.9845247330270674,GaussianProcess,3,kernel,Gaussian process,3
+8000.0,2000.0,经典回归,"KernelRidge (RBF,alpha=0.005,gamma=2.0)",0.0557795175672251,0.1081245954316875,0.9845300803407204,KernelRidge,14,kernel,Kernel ridge,4
+8000.0,2000.0,经典回归,"ExtraTrees (n=400,depth=8,leaf=1)",0.0562264648231418,0.1082084944475797,0.9845060633335704,ExtraTrees,30,ensemble,ExtraTrees,5
+8000.0,2000.0,经典回归,StackingRegressor (SVR+HGB+KernelRidge→Ridge),0.0562344083549033,0.1084155682242817,0.9844467064804416,StackingRegressor,2,ensemble,Stacking,6
+8000.0,2000.0,经典回归,"SVR (RBF,C=20.0,gamma=scale,eps=0.01)",0.0564194031606229,0.1130368468760954,0.9830925101131393,SVR,76,kernel,SVR,7
+8000.0,2000.0,经典回归,"HistGradientBoosting (depth=4,lr=0.05,iter=200)",0.056438110044094,0.1084806164435543,0.9844280372510528,HistGradientBoosting,13,ensemble,Hist. gradient boosting,8
+8000.0,2000.0,经典回归,VotingRegressor (SVR+HGB+KernelRidge),0.0564840703091863,0.1097343667364837,0.9840660154857196,VotingRegressor,2,ensemble,Voting ensemble,9
+8000.0,2000.0,经典回归,"KNN (k=40,uniform,p=1)",0.0565391682608612,0.1088211921113096,0.9843301071900654,KNN,31,kernel,KNN,10
+8000.0,2000.0,经典回归,"NuSVR (RBF,nu=0.75,C=10.0)",0.056579157527702,0.1142704624728548,0.9827214602120904,NuSVR,10,kernel,NuSVR,11
+8000.0,2000.0,经典回归,"Nystroem RBF(n=512,gamma=1.0) + Ridge",0.0568352945071271,0.1107691492361082,0.98376408729723,Nystroem RBF + Ridge,8,kernel,Nystroem RBF + ridge,12
+8000.0,2000.0,经典回归,GradientBoosting,0.0568774416733171,0.1099854809475306,0.9839930059397664,GradientBoosting,1,ensemble,Gradient boosting,13
+8000.0,2000.0,经典回归,"RandomForest (n=600,depth=8,leaf=2)",0.0569148263450136,0.1096934224078354,0.9840779039141926,RandomForest,55,ensemble,Random forest,14
+8000.0,2000.0,经典回归,"Spline Regression (B-spline, 10 knots)",0.0572699004985158,0.111100308340154,0.9836668633413426,Spline Regression,1,statistical,Spline regression,15
+8000.0,2000.0,经典回归,AdaBoost (Tree base),0.0584324835076929,0.1142173565829859,0.982737516487544,AdaBoost,1,ensemble,AdaBoost,16
+8000.0,2000.0,深度回归,MLPRegressor (128x64),0.0585008947410649,0.1191020834681242,0.98122941600384,MLPRegressor,3,neural,MLP regressor,17
+8000.0,2000.0,经典回归,NGBoost (Normal),0.0586492661171509,0.1165318508830598,0.9820308159837038,NGBoost,1,ensemble,NGBoost,18
+8000.0,2000.0,经典回归,"DecisionTree (depth=10,leaf=2)",0.0590336753651378,0.1141105136309315,0.9827697972565403,DecisionTree,9,ensemble,Decision tree,19
+8000.0,2000.0,经典回归,Polynomial Regression (deg=4),0.0593823499987505,0.1180290163638362,0.9815661248017912,Polynomial Regression,11,statistical,Polynomial regression,20
+8000.0,2000.0,经典回归,Bagging (Tree base),0.0600754772503311,0.1159305282003719,0.9822157851468936,Bagging,1,ensemble,Bagging,21
+8000.0,2000.0,经典回归,RadiusNeighbors (r=0.5),0.089605151536411,0.1724266721141177,0.960658767657368,RadiusNeighbors,4,kernel,Radius neighbours,22
+8000.0,2000.0,经典回归,LinearSVR,0.2677226494302174,0.433538406487479,0.7512894423501222,LinearSVR,7,statistical,Linear SVR,23
+8000.0,2000.0,经典回归,HuberRegressor,0.2728194334663624,0.402389014501129,0.7857448357511223,HuberRegressor,1,statistical,Huber regression,24
+8000.0,2000.0,经典回归,TheilSenRegressor,0.2832953467206945,0.4874405744664801,0.6856000841014462,TheilSenRegressor,1,statistical,Theil-Sen,25
+8000.0,2000.0,经典回归,RANSACRegressor,0.2913353028500361,0.5286561315306232,0.630184070037648,RANSACRegressor,1,statistical,RANSAC,26
+8000.0,2000.0,经典回归,Linear Regression,0.2962529755749163,0.3701731372018661,0.8186786823110925,Linear Regression,1,statistical,Linear regression,27
+8000.0,2000.0,经典回归,BayesianRidge,0.2962552153815745,0.3701724884461776,0.818679317868465,BayesianRidge,1,statistical,Bayesian ridge,28
+8000.0,2000.0,经典回归,"ElasticNet (alpha=0.0005,l1=0.1)",0.2962947802254163,0.3701612428933968,0.8186903344642003,ElasticNet,7,statistical,ElasticNet,29
+8000.0,2000.0,经典回归,Lasso,0.2963576948030106,0.3701444171868629,0.8187068169779619,Lasso,1,statistical,Lasso,30
+8000.0,2000.0,经典回归,SGDRegressor,0.2982345137954645,0.3700133942746843,0.8188351417916192,SGDRegressor,1,statistical,SGD regressor,31
+8000.0,2000.0,深度回归,FourierFeatures+Ridge,0.7271768232705037,0.8668704463636691,0.0056312632953414,FourierFeatures+Ridge,1,neural,Fourier features + ridge,32
